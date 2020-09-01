@@ -65,7 +65,7 @@ class SnakeGamePanel extends JPanel {
         yCoordinates[1] = 100;
         yCoordinates[2] = 100;
 
-        refresher = new Timer(200, event -> {
+        refresher = new Timer(1000, event -> {
             moveSnake();
             checkForApple();
             checkForCollisionWithTheBorders();
@@ -93,30 +93,30 @@ class SnakeGamePanel extends JPanel {
 
                 final int keyCode = keyEvent.getKeyCode();
 
-                if ((keyCode == VK_RIGHT || keyCode == VK_D)
+                if (keyCode == VK_RIGHT || keyCode == VK_D
                     &&
-                    (!snakeIsMovingToTheLeft)) {
+                    !snakeIsMovingToTheLeft) {
 
                     snakeIsMovingDown = false;
                     snakeIsMovingUp = false;
                     snakeIsMovingToTheRight = true;
-                } else if ((keyCode == VK_DOWN || keyCode == VK_S)
+                } else if (keyCode == VK_DOWN || keyCode == VK_S
                            &&
-                           (!snakeIsMovingUp)) {
+                           !snakeIsMovingUp) {
 
                     snakeIsMovingToTheLeft = false;
                     snakeIsMovingToTheRight = false;
                     snakeIsMovingDown = true;
-                } else if ((keyCode == VK_LEFT || keyCode == VK_A)
-                            &&
-                            (!snakeIsMovingToTheRight)) {
+                } else if (keyCode == VK_LEFT || keyCode == VK_A
+                           &&
+                           !snakeIsMovingToTheRight) {
 
                     snakeIsMovingUp = false;
                     snakeIsMovingDown = false;
                     snakeIsMovingToTheLeft = true;
-                } else if ((keyCode == VK_UP || keyCode == VK_W)
-                            &&
-                            (!snakeIsMovingDown)) {
+                } else if (keyCode == VK_UP || keyCode == VK_W
+                           &&
+                           !snakeIsMovingDown) {
 
                     snakeIsMovingToTheRight = false;
                     snakeIsMovingToTheLeft = false;
@@ -221,7 +221,8 @@ class SnakeGamePanel extends JPanel {
 
         for (int i = 0; i < size; i += 1) {
             if (appleXCoordinate == xCoordinates[i]) {
-                if (appleYCoordinate == yCoordinates[i]) createAppleCoordinates();
+                if (appleYCoordinate == yCoordinates[i])
+                    createAppleCoordinates();
             }
         }
     }
