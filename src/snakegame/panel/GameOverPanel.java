@@ -17,8 +17,19 @@ import static snakegame.panel.SnakeGamePanel.HEIGHT_OF_THE_PANEL;
 import static snakegame.panel.SnakeGamePanel.WIDTH_OF_THE_PANEL;
 
 class GameOverPanel extends javax.swing.JPanel {
+    /**
+     * Score of the previous game.
+     */
     private final JLabel score;
+
+    /**
+     * This button starts new game.
+     */
     private final JButton replay;
+
+    /**
+     * This button exits the game.
+     */
     private final JButton exit;
 
     {
@@ -72,6 +83,10 @@ class GameOverPanel extends javax.swing.JPanel {
         add(replay);
     }
 
+    /**
+     * This method starts a new game by switching current GameOverPanel
+     * to a new GamePanel.
+     */
     private void startPlaying() {
         final JFrame window = (JFrame) SwingUtilities.getWindowAncestor(this);
         window.setContentPane(new SnakeGamePanel());

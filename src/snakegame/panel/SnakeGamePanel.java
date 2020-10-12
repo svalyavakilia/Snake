@@ -22,10 +22,29 @@ import static java.awt.event.KeyEvent.VK_UP;
 import static java.awt.event.KeyEvent.VK_W;
 
 class SnakeGamePanel extends JPanel {
-            static final int HEIGHT_OF_THE_PANEL;
-            static final int WIDTH_OF_THE_PANEL;
+    /**
+     * Height of the game panel.
+     */
+    static final int HEIGHT_OF_THE_PANEL;
+
+    /**
+     * Width of the game panel.
+     */
+    static final int WIDTH_OF_THE_PANEL;
+
+    /**
+     * Maximum length of the snake.
+     */
     private static final int MAX_LENGTH_OF_THE_SNAKE;
+
+    /**
+     * Image which represents one link of the snake.
+     */
     private static final Image LINK;
+
+    /**
+     * Image which represents apple.
+     */
     private static final Image APPLE;
 
     static {
@@ -36,21 +55,63 @@ class SnakeGamePanel extends JPanel {
         APPLE = new ImageIcon("resources\\apple.png").getImage();
     }
 
+    /**
+     * X-coordinates of the snake's links.
+     */
     private final int[] xCoordinates;
+
+    /**
+     * Y-coordinates of the snake's links.
+     */
     private final int[] yCoordinates;
 
+    /**
+     * Times that "redraws" the snake.
+     */
     private final Timer refresher;
 
+    /**
+     * Current size of the snake.
+     */
     private int size;
 
+    /**
+     * <code>true</code> if snake is moving to the right,
+     * <code>false</code> otherwise.
+     */
     private boolean snakeIsMovingToTheRight;
+
+    /**
+     * <code>true</code> if snake is moving down,
+     * <code>false</code> otherwise.
+     */
     private boolean snakeIsMovingDown;
+
+    /**
+     * <code>true</code> if snake is moving to the left,
+     * <code>false</code> otherwise.
+     */
     private boolean snakeIsMovingToTheLeft;
+
+    /**
+     * <code>true</code> if snake is moving up,
+     * <code>false</code> otherwise.
+     */
     private boolean snakeIsMovingUp;
 
+    /**
+     * Apple's x coordinate.
+     */
     private int appleXCoordinate;
+
+    /**
+     * Apple's y coordinate.
+     */
     private int appleYCoordinate;
 
+    /**
+     * Current game score.
+     */
     private int score;
 
     {
@@ -65,11 +126,11 @@ class SnakeGamePanel extends JPanel {
         yCoordinates[1] = 100;
         yCoordinates[2] = 100;
 
-        refresher = new Timer(1000, event -> {
+        refresher = new Timer(200, event -> {
             moveSnake();
             checkForApple();
             checkForCollisionWithTheBorders();
-            checkForCollisionWithTheTail();
+            checkForCollisionWithItself();
             repaint();
         });
 
@@ -131,6 +192,12 @@ class SnakeGamePanel extends JPanel {
         refresher.start();
     }
 
+    /**
+     * This method changes coordinates of the head of the snake
+     * so that it moves how it needs to.
+     *
+     * @author svalyavakilia
+     */
     private void moveSnake() {
         int headXCoordinate = xCoordinates[size - 1];
         int headYCoordinate = yCoordinates[size - 1];
@@ -149,6 +216,11 @@ class SnakeGamePanel extends JPanel {
         yCoordinates[size - 1] = headYCoordinate;
     }
 
+    /**
+     * This method checks if snake collapsed with any border.
+     *
+     * @author svalyavakilia
+     */
     private void checkForCollisionWithTheBorders() {
         final boolean xCollision = (xCoordinates[size - 1] == -20)
                                    ||
@@ -165,7 +237,12 @@ class SnakeGamePanel extends JPanel {
         }
     }
 
-    private void checkForCollisionWithTheTail() {
+    /**
+     * This method checks if snake collapsed with itself.
+     *
+     * @author svalyavakilia
+     */
+    private void checkForCollisionWithItself() {
         for (int i = size - 2; i >= 0; i = i - 1) {
             if (xCoordinates[size - 1] == xCoordinates[i]) {
                 if (yCoordinates[size - 1] == yCoordinates[i]) {
@@ -177,6 +254,11 @@ class SnakeGamePanel extends JPanel {
         }
     }
 
+    /**
+     * This method checks if snake has eaten the apple.
+     *
+     * @author svalyavakilia
+     */
     private void checkForApple() {
         if (xCoordinates[size - 1] == appleXCoordinate
             &&
@@ -208,6 +290,11 @@ class SnakeGamePanel extends JPanel {
         }
     }
 
+    /**
+     * This method moves the snake.
+     *
+     * @author svalyavakilia
+     */
     private void moveLinks() {
         for (int i = size - 1; i >= 0; i = i - 1) {
             xCoordinates[i + 1] = xCoordinates[i];
@@ -215,6 +302,11 @@ class SnakeGamePanel extends JPanel {
         }
     }
 
+    /**
+     * This method creates pseudorandom x and y coordinates for apple.
+     *
+     * @author svalyavakilia
+     */
     private void createAppleCoordinates() {
         appleXCoordinate = ((int) (Math.random() * 20)) * 20;
         appleYCoordinate = ((int) (Math.random() * 20)) * 20;
@@ -227,12 +319,25 @@ class SnakeGamePanel extends JPanel {
         }
     }
 
+    /**
+     * When the snake collapses, this method switches current GamePanel
+     * to a new GameOverPanel.
+     *
+     * @author svalyavakilia
+     */
     private void switchToGameOverPanel() {
         final JFrame window = (JFrame) SwingUtilities.getWindowAncestor(this);
         window.setContentPane(new GameOverPanel(score));
         window.pack();
     }
 
+    /**
+     * This method draws all the snake's links.
+     *
+     * @param graphics is responsible for drawing snake's links.
+     *
+     * @author svalyavakilia
+     */
     @Override
     public void paintComponent(final Graphics graphics) {
         super.paintComponent(graphics);

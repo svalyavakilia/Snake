@@ -15,6 +15,9 @@ import static snakegame.panel.SnakeGamePanel.HEIGHT_OF_THE_PANEL;
 import static snakegame.panel.SnakeGamePanel.WIDTH_OF_THE_PANEL;
 
 public class MainMenuPanel extends JPanel {
+    /**
+     * Buttons which starts the game.
+     */
     private final JButton play;
 
     {
@@ -41,6 +44,10 @@ public class MainMenuPanel extends JPanel {
         add(play);
     }
 
+    /**
+     * After play button is pressed, this method switches current MainMenuPanel
+     * to a new GamePanel.
+     */
     private void switchToGamePanel() {
         final JFrame window = (JFrame) SwingUtilities.getWindowAncestor(this);
         window.setContentPane(new SnakeGamePanel());
