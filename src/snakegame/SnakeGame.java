@@ -1,5 +1,6 @@
 package snakegame;
 
+import javax.swing.SwingUtilities;
 import snakegame.frame.SnakeGameFrame;
 
 public class SnakeGame {
@@ -7,6 +8,6 @@ public class SnakeGame {
      * This method starts a new game.
      */
     public static void start() {
-        new SnakeGameFrame();
+        SwingUtilities.invokeLater(() -> new SnakeGameFrame());
     }
 }
